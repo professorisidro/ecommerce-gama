@@ -6,10 +6,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.List;
 
 @Entity
 @Table(name = "produto")
@@ -39,6 +43,13 @@ public class Produto {
 	@JsonIgnoreProperties("listaProdutos")
 	private Departamento departamento;
 
+	@ManyToMany
+	@JoinTable(name = "produto_has_categoria",
+			   joinColumns = @JoinColumn(name = "produto_codigo"),
+			   inverseJoinColumns = @JoinColumn(name = "categoria_idcategoria"))
+	private List<Categoria> categorias;
+	
+	
 	public Integer getCodigo() {
 		return codigo;
 	}
